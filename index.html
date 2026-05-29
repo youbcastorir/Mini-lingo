@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniLingo - Free Language Learning Platform</title>
+    <meta name="description" content="Learn English, French, Spanish, and Arabic for free with MiniLingo. Fun, interactive lessons and AI-powered hints.">
+    <meta name="keywords" content="language learning, learn english, learn french, learn spanish, learn arabic, duolingo style, free lessons, language quiz">
+    <meta name="author" content="MiniLingo">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://minilingo.example.com/">
+    <meta property="og:title" content="MiniLingo - Free Language Learning Platform">
+    <meta property="og:description" content="Master new languages with fun, interactive lessons and AI-powered hints.">
+    <meta property="og:image" content="https://minilingo.example.com/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="MiniLingo - Free Language Learning Platform">
+    <meta property="twitter:description" content="Master new languages with fun, interactive lessons and AI-powered hints.">
+
+    <!-- PWA / Mobile -->
+    <meta name="theme-color" content="#58cc02">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="navbar">
+            <div class="logo">MiniLingo</div>
+            <div class="stats">
+                <span id="streak-display">🔥 0</span>
+                <span id="xp-display">XP: 0</span>
+                <span id="level-display" class="badge">Lvl 1</span>
+            </div>
+        </nav>
+
+        <!-- Home Screen -->
+        <section id="home-screen" class="screen">
+            <div class="hero">
+                <h1>Master a New Language</h1>
+                <p>Fast, fun, and free lessons!</p>
+                <button id="start-btn" class="primary-btn">Get Started</button>
+                <button id="settings-btn" class="secondary-btn">Settings</button>
+            </div>
+        </section>
+
+        <!-- Language Selection Screen -->
+        <section id="language-screen" class="screen hidden">
+            <h2>I want to learn...</h2>
+            <div class="grid">
+                <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+                <button class="lang-btn" data-lang="fr">🇫🇷 French</button>
+                <button class="lang-btn" data-lang="es">🇪🇸 Spanish</button>
+                <button class="lang-btn" data-lang="ar">🇸🇦 Arabic</button>
+            </div>
+        </section>
+
+        <!-- Levels Screen -->
+        <section id="levels-screen" class="screen hidden">
+            <div id="levels-list">
+                <!-- Levels will be injected here -->
+            </div>
+            <button class="back-btn" onclick="showScreen('language')">Back</button>
+        </section>
+
+        <!-- Quiz Screen -->
+        <section id="quiz-screen" class="screen hidden">
+            <div id="quiz-container">
+                <!-- Question and options injected here -->
+            </div>
+            <div id="feedback" class="feedback"></div>
+            
+            <div class="ai-hint-box">
+                <button id="ai-hint-btn" class="ai-btn">Get AI Hint</button>
+                <p id="ai-hint-text" class="hint-text"></p>
+            </div>
+        </section>
+
+        <!-- Result Screen -->
+        <section id="result-screen" class="screen hidden">
+            <div class="hero">
+                <h2>Great Job!</h2>
+                <p id="result-msg"></p>
+                <button id="back-home" class="primary-btn">Continue</button>
+            </div>
+        </section>
+
+        <!-- Settings Screen -->
+        <section id="settings-screen" class="screen hidden">
+            <h2>Settings</h2>
+            <div class="form-group">
+                <label for="api-key-input">Groq API Key (for AI Hints):</label>
+                <input type="password" id="api-key-input" placeholder="gsk_...">
+                <p class="small">Your key is saved locally in your browser.</p>
+            </div>
+            <button id="save-settings" class="primary-btn">Save Settings</button>
+            <button class="back-btn" onclick="showScreen('home')">Cancel</button>
+        </section>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
