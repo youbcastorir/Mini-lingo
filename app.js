@@ -1,206 +1,348 @@
-import lessons from './lessons.js';
+'use strict';
 
-// --- State Management ---
-const state = {
-    currentLang: null,
-    currentLevel: null,
-    currentExerciseIndex: 0,
-    xp: parseInt(localStorage.getItem('minilingo_xp')) || 0,
-    streak: parseInt(localStorage.getItem('minilingo_streak')) || 0,
-    lastActive: localStorage.getItem('minilingo_lastActive') || null,
-    level: Math.floor((parseInt(localStorage.getItem('minilingo_xp')) || 0) / 100) + 1,
-    groqApiKey: localStorage.getItem('minilingo_groq_key') || ''
+// ── State ──────────────────────────────────────────────────────────────────
+const STATE = {
+  lang: null,
+  screen: 'home',       // home | lessons | vocab | quiz | result
+  lesson: null,
+  quizIdx: 0,
+  quizScore: 0,
+  selected: null,
+  answered: false,
+  hintCache: {}
 };
 
-// --- DOM Elements ---
-const screens = {
-    home: document.getElementById('home-screen'),
-    language: document.getElementById('language-screen'),
-    levels: document.getElementById('levels-screen'),
-    quiz: document.getElementById('quiz-screen'),
-    result: document.getElementById('result-screen'),
-    settings: document.getElementById('settings-screen')
-};
+const STORAGE_KEY = 'minilingo_v1';
 
-const components = {
-    xpDisplay: document.getElementById('xp-display'),
-    streakDisplay: document.getElementById('streak-display'),
-    levelDisplay: document.getElementById('level-display'),
-    quizContainer: document.getElementById('quiz-container'),
-    feedback: document.getElementById('feedback'),
-    aiHintBtn: document.getElementById('ai-hint-btn'),
-    aiHintText: document.getElementById('ai-hint-text')
-};
+let progress = loadProgress();
 
-// --- Initialization ---
-function init() {
-    updateStats();
-    checkStreak();
-    showScreen('home');
-    setupEventListeners();
+function loadProgress() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultProgress();
+  } catch { return defaultProgress(); }
 }
 
-function setupEventListeners() {
-    document.getElementById('start-btn').addEventListener('click', () => showScreen('language'));
-    document.getElementById('settings-btn').addEventListener('click', () => showScreen('settings'));
-    document.getElementById('save-settings').addEventListener('click', saveSettings);
-    document.getElementById('back-home').addEventListener('click', () => showScreen('home'));
-    
-    // Language selection
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            state.currentLang = btn.dataset.lang;
-            renderLevels();
-            showScreen('levels');
-        });
-    });
-
-    components.aiHintBtn.addEventListener('click', fetchAIHint);
-}
-
-// --- Navigation ---
-function showScreen(screenId) {
-    Object.values(screens).forEach(s => s.classList.add('hidden'));
-    screens[screenId].classList.remove('hidden');
-}
-
-// --- UI Rendering ---
-function renderLevels() {
-    const langData = lessons[state.currentLang];
-    const levelsList = document.getElementById('levels-list');
-    levelsList.innerHTML = `<h2>${langData.flag} ${langData.title} Lessons</h2>`;
-    
-    langData.levels.forEach(level => {
-        const btn = document.createElement('button');
-        btn.className = 'level-card';
-        btn.innerHTML = `<h3>Level ${level.id}</h3><p>${level.title}</p>`;
-        btn.onclick = () => startLevel(level);
-        levelsList.appendChild(btn);
-    });
-}
-
-function startLevel(level) {
-    state.currentLevel = level;
-    state.currentExerciseIndex = 0;
-    showExercise();
-    showScreen('quiz');
-}
-
-function showExercise() {
-    const exercise = state.currentLevel.exercises[state.currentExerciseIndex];
-    components.feedback.innerText = '';
-    components.aiHintText.innerText = '';
-    components.aiHintBtn.classList.remove('hidden');
-
-    let html = `<h3>${exercise.question}</h3><div class="options-grid">`;
-    exercise.options.forEach(opt => {
-        html += `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`;
-    });
-    html += `</div>`;
-    components.quizContainer.innerHTML = html;
-}
-
-// --- Core Logic ---
-window.checkAnswer = function(selected) {
-    const exercise = state.currentLevel.exercises[state.currentExerciseIndex];
-    const isCorrect = selected === exercise.answer;
-
-    if (isCorrect) {
-        components.feedback.innerHTML = '<span class="correct">Correct! +10 XP</span>';
-        state.xp += 10;
-        updateStats();
-        
-        setTimeout(() => {
-            state.currentExerciseIndex++;
-            if (state.currentExerciseIndex < state.currentLevel.exercises.length) {
-                showExercise();
-            } else {
-                finishLevel();
-            }
-        }, 1000);
-    } else {
-        components.feedback.innerHTML = '<span class="incorrect">Try again!</span>';
-    }
-};
-
-function finishLevel() {
-    const today = new Date().toISOString().split('T')[0];
-    if (state.lastActive !== today) {
-        state.streak++;
-        state.lastActive = today;
-    }
-    saveProgress();
-    showScreen('result');
-    document.getElementById('result-msg').innerText = `Level Complete! You earned XP and kept your ${state.streak} day streak!`;
-}
-
-function updateStats() {
-    state.level = Math.floor(state.xp / 100) + 1;
-    components.xpDisplay.innerText = `XP: ${state.xp}`;
-    components.streakDisplay.innerText = `🔥 ${state.streak}`;
-    components.levelDisplay.innerText = `Lvl ${state.level}`;
+function defaultProgress() {
+  return { xp: 0, level: 1, streak: 0, lastDate: null, completed: {}, vocab: {} };
 }
 
 function saveProgress() {
-    localStorage.setItem('minilingo_xp', state.xp);
-    localStorage.setItem('minilingo_streak', state.streak);
-    localStorage.setItem('minilingo_lastActive', state.lastActive);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
-function checkStreak() {
-    if (!state.lastActive) return;
-    const last = new Date(state.lastActive);
-    const today = new Date();
-    const diffDays = Math.floor((today - last) / (1000 * 60 * 60 * 24));
-    
-    if (diffDays > 1) {
-        state.streak = 0;
-        saveProgress();
-    }
+// ── XP / Level ─────────────────────────────────────────────────────────────
+function xpForLevel(lvl) { return lvl * lvl * 20; }
+function currentLevel() {
+  let lvl = 1;
+  while (progress.xp >= xpForLevel(lvl + 1)) lvl++;
+  return lvl;
+}
+function xpPercent() {
+  const lvl = currentLevel();
+  const base = xpForLevel(lvl);
+  const next = xpForLevel(lvl + 1);
+  return Math.round(((progress.xp - base) / (next - base)) * 100);
 }
 
-function saveSettings() {
-    const key = document.getElementById('api-key-input').value;
-    state.groqApiKey = key;
-    localStorage.setItem('minilingo_groq_key', key);
-    alert('Settings saved!');
-    showScreen('home');
+// ── Streak ─────────────────────────────────────────────────────────────────
+function updateStreak() {
+  const today = new Date().toDateString();
+  if (progress.lastDate === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  progress.streak = progress.lastDate === yesterday ? progress.streak + 1 : 1;
+  progress.lastDate = today;
+  saveProgress();
 }
 
-// --- Groq API Integration ---
-async function fetchAIHint() {
-    if (!state.groqApiKey) {
-        components.aiHintText.innerText = "Please add your Groq API Key in settings for AI hints.";
-        return;
-    }
+// ── Groq API hint (minimal calls, cached) ──────────────────────────────────
+const GROQ_KEY = (window.__env && window.__env.GROQ_API_KEY) || '';
 
-    const exercise = state.currentLevel.exercises[state.currentExerciseIndex];
-    components.aiHintBtn.innerText = "Thinking...";
-    
-    try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${state.groqApiKey}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: "llama-3.3-70b-versatile",
-                messages: [{
-                    role: "user", 
-                    content: `Give a very short hint for this language learning question: "${exercise.question}". Don't give the answer away.`
-                }],
-                max_tokens: 50
-            })
-        });
-        
-        const data = await response.json();
-        components.aiHintText.innerText = data.choices[0].message.content;
-    } catch (error) {
-        components.aiHintText.innerText = "Error fetching hint. Check API key.";
-    } finally {
-        components.aiHintBtn.innerText = "Get AI Hint";
-    }
+async function getHint(word, lang) {
+  const cacheKey = `${lang}_${word}`;
+  if (STATE.hintCache[cacheKey]) return STATE.hintCache[cacheKey];
+  if (!GROQ_KEY) return `Try to remember the context where you saw "${word}"!`;
+  try {
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        max_tokens: 60,
+        messages: [{ role: 'user', content: `Give a one-sentence memory tip to remember the ${lang} word "${word}" in English. Be short and fun.` }]
+      })
+    });
+    const d = await r.json();
+    const hint = d.choices?.[0]?.message?.content?.trim() || 'Keep practicing!';
+    STATE.hintCache[cacheKey] = hint;
+    return hint;
+  } catch { return 'Keep practicing — repetition is key!'; }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// ── Routing / Rendering ────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const app = () => $('app');
+
+function render() {
+  switch (STATE.screen) {
+    case 'home':    renderHome(); break;
+    case 'lessons': renderLessons(); break;
+    case 'vocab':   renderVocab(); break;
+    case 'quiz':    renderQuiz(); break;
+    case 'result':  renderResult(); break;
+  }
+}
+
+// ── HOME ───────────────────────────────────────────────────────────────────
+function renderHome() {
+  updateStreak();
+  const lvl = currentLevel();
+  const pct = xpPercent();
+  app().innerHTML = `
+    <header class="header">
+      <div class="logo">🦜 MiniLingo</div>
+      <div class="stats-bar">
+        <span class="stat">🔥 ${progress.streak}</span>
+        <span class="stat">⭐ ${progress.xp} XP</span>
+        <span class="stat">Lv.${lvl}</span>
+      </div>
+    </header>
+
+    <div class="xp-bar-wrap">
+      <div class="xp-bar-label">Level ${lvl} → ${lvl + 1}</div>
+      <div class="xp-bar"><div class="xp-fill" style="width:${pct}%"></div></div>
+    </div>
+
+    <h2 class="section-title">Choose a Language</h2>
+    <div class="lang-grid">
+      ${Object.entries(LESSONS_DATA).map(([code, lang]) => `
+        <button class="lang-card" onclick="selectLang('${code}')">
+          <span class="lang-flag">${lang.flag}</span>
+          <span class="lang-name">${lang.name}</span>
+        </button>
+      `).join('')}
+    </div>
+
+    <div class="daily-tip">
+      <span>💡</span>
+      <span>Tip: Practice every day to keep your streak alive!</span>
+    </div>
+  `;
+}
+
+window.selectLang = function(code) {
+  STATE.lang = code;
+  STATE.screen = 'lessons';
+  render();
+};
+
+// ── LESSONS ────────────────────────────────────────────────────────────────
+function renderLessons() {
+  const lang = LESSONS_DATA[STATE.lang];
+  const lvl = currentLevel();
+  app().innerHTML = `
+    <header class="header">
+      <button class="back-btn" onclick="goHome()">← Back</button>
+      <div class="logo">${lang.flag} ${lang.name}</div>
+      <div class="stats-bar">
+        <span class="stat">🔥 ${progress.streak}</span>
+        <span class="stat">⭐ ${progress.xp}</span>
+      </div>
+    </header>
+
+    <h2 class="section-title">Lessons</h2>
+    <div class="lessons-list">
+      ${lang.lessons.map((lesson, i) => {
+        const done = progress.completed[lesson.id];
+        const locked = lvl < lesson.requiredLevel;
+        return `
+          <div class="lesson-card ${done ? 'done' : ''} ${locked ? 'locked' : ''}">
+            <div class="lesson-icon">${locked ? '🔒' : lesson.icon}</div>
+            <div class="lesson-info">
+              <div class="lesson-title">${lesson.title}</div>
+              <div class="lesson-meta">${lesson.xp} XP · ${lesson.quiz.length} questions</div>
+            </div>
+            <div class="lesson-actions">
+              ${!locked ? `<button class="btn-sm btn-outline" onclick="startVocab(${i})">📖 Study</button>` : ''}
+              ${!locked ? `<button class="btn-sm btn-primary" onclick="startQuiz(${i})">${done ? '🔄 Redo' : '▶ Start'}</button>` : ''}
+              ${locked ? `<span class="locked-label">Lv.${lesson.requiredLevel} needed</span>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+window.goHome = function() { STATE.screen = 'home'; render(); };
+
+window.startVocab = function(idx) {
+  STATE.lesson = idx;
+  STATE.screen = 'vocab';
+  render();
+};
+
+window.startQuiz = function(idx) {
+  STATE.lesson = idx;
+  STATE.quizIdx = 0;
+  STATE.quizScore = 0;
+  STATE.selected = null;
+  STATE.answered = false;
+  STATE.screen = 'quiz';
+  render();
+};
+
+// ── VOCAB ──────────────────────────────────────────────────────────────────
+function renderVocab() {
+  const lang = LESSONS_DATA[STATE.lang];
+  const lesson = lang.lessons[STATE.lesson];
+  app().innerHTML = `
+    <header class="header">
+      <button class="back-btn" onclick="backToLessons()">← Back</button>
+      <div class="logo">📖 ${lesson.title}</div>
+    </header>
+
+    <div class="vocab-grid">
+      ${lesson.vocab.map(v => `
+        <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+          <div class="vocab-front">
+            <div class="vocab-word ${STATE.lang === 'ar' ? 'rtl' : ''}">${v.word}</div>
+            <div class="vocab-tap">Tap to reveal</div>
+          </div>
+          <div class="vocab-back">
+            <div class="vocab-translation">${v.translation}</div>
+            <div class="vocab-example ${STATE.lang === 'ar' ? 'rtl' : ''}">${v.example}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="vocab-footer">
+      <button class="btn-primary btn-block" onclick="startQuiz(${STATE.lesson})">Take the Quiz →</button>
+    </div>
+  `;
+}
+
+window.backToLessons = function() { STATE.screen = 'lessons'; render(); };
+
+// ── QUIZ ───────────────────────────────────────────────────────────────────
+function renderQuiz() {
+  const lang = LESSONS_DATA[STATE.lang];
+  const lesson = lang.lessons[STATE.lesson];
+  const q = lesson.quiz[STATE.quizIdx];
+  const total = lesson.quiz.length;
+  const pct = Math.round((STATE.quizIdx / total) * 100);
+
+  app().innerHTML = `
+    <header class="header">
+      <button class="back-btn" onclick="backToLessons()">✕</button>
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress"><div class="quiz-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="quiz-counter">${STATE.quizIdx + 1}/${total}</div>
+    </header>
+
+    <div class="quiz-body">
+      <div class="quiz-question">${q.q}</div>
+      <div class="options-grid" id="opts">
+        ${q.options.map((opt, i) => `
+          <button class="option-btn" id="opt_${i}" onclick="selectAnswer(${i})">${opt}</button>
+        `).join('')}
+      </div>
+      <div class="quiz-feedback" id="feedback"></div>
+      <div class="hint-area" id="hintArea"></div>
+    </div>
+
+    <div class="quiz-foot">
+      <button class="btn-primary" id="nextBtn" style="display:none" onclick="nextQuestion()">
+        ${STATE.quizIdx + 1 < total ? 'Next →' : 'Finish 🎉'}
+      </button>
+    </div>
+  `;
+}
+
+window.selectAnswer = function(idx) {
+  if (STATE.answered) return;
+  STATE.answered = true;
+  STATE.selected = idx;
+
+  const lang = LESSONS_DATA[STATE.lang];
+  const lesson = lang.lessons[STATE.lesson];
+  const q = lesson.quiz[STATE.quizIdx];
+  const correct = idx === q.answer;
+
+  if (correct) STATE.quizScore++;
+
+  // Color options
+  q.options.forEach((_, i) => {
+    const btn = $(`opt_${i}`);
+    if (i === q.answer) btn.classList.add('correct');
+    else if (i === idx && !correct) btn.classList.add('wrong');
+    btn.disabled = true;
+  });
+
+  // Feedback
+  const fb = $('feedback');
+  fb.textContent = correct ? '✅ Correct!' : `❌ The answer is: ${q.options[q.answer]}`;
+  fb.className = `quiz-feedback ${correct ? 'fb-correct' : 'fb-wrong'}`;
+
+  $('nextBtn').style.display = 'block';
+
+  // Show hint for wrong answers (cached, lazy)
+  if (!correct) {
+    const vocab = lesson.vocab[STATE.quizIdx % lesson.vocab.length];
+    const ha = $('hintArea');
+    ha.textContent = '💡 Loading hint…';
+    getHint(vocab.word, lang.name).then(h => { ha.textContent = `💡 ${h}`; });
+  }
+};
+
+window.nextQuestion = function() {
+  const lang = LESSONS_DATA[STATE.lang];
+  const lesson = lang.lessons[STATE.lesson];
+  STATE.quizIdx++;
+  STATE.answered = false;
+  STATE.selected = null;
+
+  if (STATE.quizIdx >= lesson.quiz.length) {
+    // Finish
+    const earned = Math.round(lesson.xp * (STATE.quizScore / lesson.quiz.length));
+    progress.xp += earned;
+    progress.completed[lesson.id] = true;
+    updateStreak();
+    saveProgress();
+    STATE.screen = 'result';
+    render();
+  } else {
+    render();
+  }
+};
+
+// ── RESULT ─────────────────────────────────────────────────────────────────
+function renderResult() {
+  const lang = LESSONS_DATA[STATE.lang];
+  const lesson = lang.lessons[STATE.lesson];
+  const total = lesson.quiz.length;
+  const pct = Math.round((STATE.quizScore / total) * 100);
+  const earned = Math.round(lesson.xp * (STATE.quizScore / total));
+  const stars = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+  const medal = pct === 100 ? '🏆' : pct >= 80 ? '🥇' : pct >= 50 ? '🥈' : '🥉';
+
+  app().innerHTML = `
+    <div class="result-screen">
+      <div class="result-medal">${medal}</div>
+      <h2 class="result-title">Lesson Complete!</h2>
+      <div class="result-stars">${stars}</div>
+      <div class="result-score">${STATE.quizScore}/${total} correct</div>
+      <div class="result-xp">+${earned} XP earned</div>
+      <div class="result-streak">🔥 ${progress.streak} day streak!</div>
+      <div class="result-actions">
+        <button class="btn-outline btn-block" onclick="startQuiz(${STATE.lesson})">🔄 Try Again</button>
+        <button class="btn-primary btn-block" onclick="backToLessons()">Continue →</button>
+      </div>
+    </div>
+  `;
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+updateStreak();
+render();

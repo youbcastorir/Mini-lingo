@@ -1,117 +1,96 @@
-# MiniLingo
+# 🦜 MiniLingo
 
-MiniLingo is a lightweight, Duolingo-style language learning website designed for speed, mobile responsiveness, and a beginner-friendly user interface. It offers interactive lessons, QCM quizzes, and tracks user progress with XP, levels, and streaks. The application supports English, French, Spanish, and Arabic, and integrates with the Groq API for small translations, hints, or exercises.
+A lightweight, Duolingo-style language learning app built with pure HTML, CSS, and Vanilla JavaScript. No frameworks, no backend, no heavy dependencies.
 
 ## Features
 
-*   **Beginner Lessons**: Structured lessons to introduce new vocabulary and grammar.
-*   **QCM Quizzes**: Multiple-choice questions for interactive learning and assessment.
-*   **XP, Levels, Streaks**: Gamified progress tracking to keep users motivated.
-*   **Vocabulary Training**: Focused exercises to build and reinforce vocabulary.
-*   **Instant Corrections**: Immediate feedback on answers for effective learning.
-*   **Progress Saved Locally**: Uses `localStorage` to save user progress directly in the browser.
-*   **Multilingual Support**: Content available in English, French, Spanish, and Arabic.
-*   **AI Hints**: Optional hints powered by the Groq API to assist learners.
+- 🌍 4 languages: English, French, Spanish, Arabic
+- 📖 Vocabulary flashcards with flip animation
+- ✅ Multiple-choice quizzes with instant feedback
+- ⭐ XP points & level progression
+- 🔥 Daily streak counter
+- 🔒 Lesson unlock system
+- 💾 Progress saved to localStorage
+- 💡 Optional AI hints via Groq API
 
-## Requirements
-
-*   Fast, mobile-responsive, beginner-friendly UI.
-*   Minimal animations for a smooth experience.
-*   Low CPU/RAM usage.
-*   No backend or external frameworks (Vanilla HTML, CSS, JavaScript only).
-
-## File Structure
-
-```
-minilingo/
-├── index.html
-├── style.css
-├── app.js
-├── lessons.js
-├── README.md
-├── .gitignore
-└── .env.example
-```
+---
 
 ## Local Installation
 
-To set up MiniLingo on your local machine, follow these steps:
+```bash
+# Clone the repo
+git clone https://github.com/YOUR_USERNAME/minilingo.git
+cd minilingo
 
-1.  **Clone the repository**:
+# No build step needed — open directly
+open index.html
+# or serve with any static server:
+npx serve .
+```
 
-    ```bash
-    git clone https://github.com/your-username/minilingo.git
-    cd minilingo
-    ```
+---
 
-2.  **Open `index.html`**: Simply open the `index.html` file in your web browser. Since there is no backend, no server is required to run the application locally.
+## API Setup (Optional — for AI hints)
 
-## API Setup (Groq)
+1. Get a free API key at https://console.groq.com
+2. Copy `.env.example` to `.env`
+3. Add your key: `GROQ_API_KEY=your_key_here`
+4. Inject it into the page. For GitHub Pages, edit `index.html`:
 
-MiniLingo uses the Groq API for AI-powered hints. To enable this feature:
+```html
+<script>
+  window.__env = { GROQ_API_KEY: "your_key_here" };
+</script>
+```
 
-1.  **Get an API Key**: Obtain a Groq API key from the [Groq Console](https://console.groq.com/keys).
+> ⚠️ Do not commit real API keys. Use environment injection or a build tool for production.
 
-2.  **Configure `.env.example`**: Rename `.env.example` to `.env` and add your Groq API key:
-
-    ```
-    GROQ_API_KEY=gsk_YOUR_GROQ_API_KEY_HERE
-    ```
-
-    *Note: For security reasons, the API key is stored in `localStorage` after being entered in the settings. The `.env` file is primarily for local development and is excluded from version control via `.gitignore`.*
-
-3.  **Enter Key in Application**: Navigate to the "Settings" screen within the MiniLingo application and paste your Groq API key into the provided input field. Click "Save Settings".
+---
 
 ## GitHub Pages Deployment
 
-MiniLingo can be easily deployed using GitHub Pages due to its static nature.
+1. Push your code to GitHub (see commands below)
+2. Go to **Settings → Pages**
+3. Set source to `main` branch, `/ (root)`
+4. Your site will be live at `https://YOUR_USERNAME.github.io/minilingo`
 
-1.  **Create a GitHub Repository**: Push your local repository to GitHub.
-
-2.  **Enable GitHub Pages**: Go to your repository settings on GitHub, navigate to the "Pages" section, and select the `main` branch (or `gh-pages` if you prefer) as the source for deployment. Ensure the root directory is selected.
-
-3.  **Access Your Site**: Your MiniLingo site will be available at `https://your-username.github.io/your-repository-name/`.
+---
 
 ## Git Commands
 
-Here are some essential Git commands for managing your project:
+```bash
+git init
+git add .
+git commit -m "Launch MiniLingo"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/minilingo.git
+git push -u origin main
+```
 
-*   **Initialize a new Git repository**:
+---
 
-    ```bash
-    git init
-    ```
+## Project Structure
 
-*   **Add files to the staging area**:
+```
+minilingo/
+├── index.html      # App shell
+├── style.css       # All styles
+├── app.js          # App logic, routing, quiz engine
+├── lessons.js      # All lesson & quiz data
+├── .env.example    # API key template
+├── .gitignore
+└── README.md
+```
 
-    ```bash
-    git add .
-    ```
+---
 
-*   **Commit changes**:
+## Performance
 
-    ```bash
-    git commit -m "Initial commit"
-    ```
+- ~15 KB total (HTML + CSS + JS, no images)
+- Zero external JS dependencies
+- Groq API called only on wrong answers, results cached in memory
+- All progress stored in localStorage (no backend)
 
-*   **Link to a remote repository**:
+---
 
-    ```bash
-    git remote add origin https://github.com/your-username/your-repository-name.git
-    ```
-
-*   **Push changes to GitHub**:
-
-    ```bash
-    git push -u origin main
-    ```
-
-*   **Pull latest changes from remote**:
-
-    ```bash
-    git pull origin main
-    ```
-
-## Author
-
-**Manus AI**
+MIT License
