@@ -1,0 +1,78 @@
+{
+  "project": "taboula.com",
+  "tagline": "كاتب عمومي المحمدية وجميع مدن المغرب",
+  "domain": "taboula.com",
+  "base_url": "https://taboula.com/",
+  "primary_language": "ar",
+  "secondary_languages": ["fr", "en", "es"],
+  "whatsapp": "+212661001122",
+  "email": "contact@taboula.com",
+  "primary_city": {
+    "ar": "المحمدية",
+    "fr": "Mohammedia",
+    "coordinates": { "lat": 33.6861, "lng": -7.3836 },
+    "region": "MA-04",
+    "postal": "28800"
+  },
+  "cities_count": 40,
+  "blog_articles": {
+    "total": 230,
+    "ar": 100,
+    "fr": 50,
+    "en": 50,
+    "es": 30
+  },
+  "services_count": 8,
+  "schema_types": [
+    "LocalBusiness", "ProfessionalService", "WebSite",
+    "FAQPage", "Article", "Review", "AggregateRating",
+    "ContactPoint", "OpeningHoursSpecification", "BreadcrumbList"
+  ],
+  "seo_features": {
+    "hreflang": true,
+    "canonical": true,
+    "open_graph": true,
+    "twitter_cards": true,
+    "sitemap_xml": true,
+    "robots_txt": true,
+    "pwa_manifest": true,
+    "service_worker": true,
+    "rtl_arabic": true,
+    "geo_meta": true,
+    "faq_schema": true,
+    "local_business_schema": true,
+    "mobile_first": true,
+    "cities_pages": true
+  },
+  "target_keywords": {
+    "ar": [
+      "كاتب عمومي المحمدية",
+      "taboula كاتب عمومي",
+      "خدمات إدارية المحمدية",
+      "كاتب عمومي الدار البيضاء",
+      "كاتب عمومي الرباط",
+      "كاتب عمومي مراكش",
+      "سيرة ذاتية احترافية المغرب",
+      "ترجمة وثائق المغرب",
+      "مساعدة تأشيرة المغرب"
+    ],
+    "fr": [
+      "écrivain public Mohammedia",
+      "taboula services administratifs",
+      "écrivain public Casablanca",
+      "CV professionnel Maroc",
+      "traduction documents Maroc"
+    ],
+    "en": [
+      "public writer Mohammedia",
+      "taboula Morocco",
+      "administrative services Morocco",
+      "document translation Morocco"
+    ],
+    "es": [
+      "escritor público Mohammedia",
+      "taboula Marruecos",
+      "servicios administrativos Marruecos"
+    ]
+  }
+}

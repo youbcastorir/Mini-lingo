@@ -1,0 +1,25 @@
+{
+  "name": "taboula.com — كاتب عمومي المحمدية والمغرب",
+  "short_name": "taboula",
+  "description": "خدمات الكاتب العمومي في المحمدية وجميع مدن المغرب. إدارية، سيرة ذاتية، ترجمة، تأشيرات.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#006233",
+  "theme_color": "#006233",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["business","productivity"],
+  "icons": [
+    { "src": "icons/icon-72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "واتساب", "short_name": "WhatsApp", "url": "https://wa.me/212661001122", "icons": [{"src":"icons/icon-96.png","sizes":"96x96"}] },
+    { "name": "الخدمات", "short_name": "Services", "url": "./#services", "icons": [{"src":"icons/icon-96.png","sizes":"96x96"}] },
+    { "name": "المدن", "short_name": "Cities", "url": "./#cities", "icons": [{"src":"icons/icon-96.png","sizes":"96x96"}] }
+  ]
+}

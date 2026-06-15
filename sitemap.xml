@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- الصفحة الرئيسية -->
+  <url>
+    <loc>https://taboula.com/</loc>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://taboula.com/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://taboula.com/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://taboula.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="es"        href="https://taboula.com/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taboula.com/"/>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- صفحات الخدمات -->
+  <url><loc>https://taboula.com/services/administrative-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/employment-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/translation-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/legal-document-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/immigration-visa-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/business-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/digital-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/services/civil-status-services.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <!-- صفحات المدن — 40 مدينة -->
+  <url><loc>https://taboula.com/cities/mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://taboula.com/cities/casablanca.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/cities/rabat.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taboula.com/cities/fes.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://taboula.com/cities/marrakech.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://taboula.com/cities/tanger.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://taboula.com/cities/agadir.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://taboula.com/cities/meknes.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/cities/oujda.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/cities/kenitra.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/cities/tetouan.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/cities/safi.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/eljadida.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/benimelall.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/nador.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/khouribga.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/settat.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/berrechid.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/larache.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/ksar.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/taza.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/essaouira.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/ouarzazate.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/guelmim.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/dakhla.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/laayoune.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/errachidia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/sale.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/cities/temara.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/cities/inzegan.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/tiznit.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/berkane.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/taourirt.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/khenifra.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/azilal.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/zagora.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/ifrane.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/cities/bouskoura.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/ain-sebaa.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/cities/sidi-bettache.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+
+  <!-- مدونة — فهرس -->
+  <url><loc>https://taboula.com/blog/</loc><lastmod>2025-01-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+
+  <!-- مقالات عربية — 100 -->
+  <url><loc>https://taboula.com/blog/katib-umumi-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/blog/khidmat-idaria-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/kitabat-shikaya-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/sira-dhatia-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/katib-umumi-casablanca.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/katib-umumi-rabat.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/katib-umumi-marrakech.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/kitabat-talab-idari-maghrib.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/sira-dhatia-ihtirafi.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/tarjama-wathiqa-rasmi.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/taashira-uruba-min-maghrib.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/taboula-khidmat-baad.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- مقالات فرنسية -->
+  <url><loc>https://taboula.com/blog/ecrivain-public-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/ecrivain-public-casablanca.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/cv-professionnel-maroc-2024.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/visa-schengen-maroc.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/expatries-maroc-administratif.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- مقالات إنجليزية -->
+  <url><loc>https://taboula.com/blog/public-writer-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/administrative-services-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/visa-application-morocco-guide.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taboula.com/blog/expat-guide-morocco-admin.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- مقالات إسبانية -->
+  <url><loc>https://taboula.com/blog/escritor-publico-mohammedia.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://taboula.com/blog/espanoles-marruecos-tramites.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- صفحات إضافية -->
+  <url><loc>https://taboula.com/contact.html</loc><lastmod>2025-01-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taboula.com/privacy.html</loc><lastmod>2025-01-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://taboula.com/terms.html</loc><lastmod>2025-01-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+
+</urlset>
